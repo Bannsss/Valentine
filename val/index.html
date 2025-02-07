@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Card</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Sacramento');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: pink;
+            font-family: 'Sacramento', cursive;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        #envelope {
+            width: 90%;
+            max-width: 400px;
+            height: 250px;
+            background: #eee;
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(200px); opacity: 0; }
+        }
+
+        .line1, .line2 {
+            height: 100%;
+            background: #999;
+            width: 5px;
+            position: absolute;
+        }
+
+        .line1 {
+            transform: rotate(-60deg);
+            transform-origin: 0 0;
+            left: 0;
+        }
+
+        .line2 {
+            transform: rotate(60deg);
+            transform-origin: 100% 0;
+            right: 0;
+        }
+
+        /* SMALLER HEART */
+        #heart {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            width: 30px;
+            height: 30px;
+            background: red;
+        }
+
+        #heart::before,
+        #heart::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: red;
+            border-radius: 50%;
+        }
+
+        #heart::before {
+            left: 15px;
+            top: 0;
+        }
+
+        #heart::after {
+            left: 0;
+            top: -15px;
+        }
+
+        #heart input[type=checkbox] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            opacity: 0;
+        }
+
+        #card {
+            width: 90%;
+            max-width: 400px;
+            margin-top: 20px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            visibility: hidden;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+        }
+
+        #card h2 {
+            font-size: 2.5vw;
+            color: pink;
+        }
+
+        #card p {
+            font-size: 1.5vw;
+            margin: 10px 0;
+        }
+
+        /* MOBILE RESPONSIVE */
+        @media (max-width: 600px) {
+            #envelope {
+                width: 90%;
+                height: 180px;
+            }
+
+            .line1, .line2 {
+                height: 180px;
+            }
+
+            #heart {
+                width: 20px;
+                height: 20px;
+            }
+
+            #heart::before, #heart::after {
+                width: 20px;
+                height: 20px;
+            }
+
+            #card {
+                width: 90%;
+                padding: 15px;
+            }
+
+            #card h2 {
+                font-size: 5vw;
+            }
+
+            #card p {
+                font-size: 4vw;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="envelope">
+        <div class="line1"></div>
+        <div class="line2"></div>
+        <div id="heart">
+            <input type="checkbox">
+        </div>
+    </div>
+
+    <div id="card">
+        <h2>Dear Zaeyah</h2>
+        <p>This is super cheesy but I thought you might get a kick out of it.</p>
+        <p>I wanted to let you know that I am very proud of you and all of your commitments and achievements.</p>
+        <p>This is the only gift I can give you for this Valentine's. I hope you like it.💖</p>
+        <p>Happy Valentine's Day!</p>
+    </div>
+
+    <!-- AUDIO ELEMENT (Hidden but will play when card appears) -->
+    <audio id="Music" loop>
+        <source src="/Lonely.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        $(document).ready(function() {
+            $('input[type=checkbox]').change(function(){
+                $('#envelope').css({'animation':'fall 2s linear 1', '-webkit-animation':'fall 2s linear 1'});
+                $('#envelope').fadeOut(1500, function() {
+                    $('#card').css({'visibility':'visible'});
+
+                    // Play music when the card is shown
+                    var music = document.getElementById("Music");
+                    music.play();
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
