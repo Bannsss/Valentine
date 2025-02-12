@@ -181,21 +181,25 @@
     </div>
 
     <!-- AUDIO ELEMENT (Hidden but will play when card appears) -->
-    <audio id="Music" loop>
-        <source src="/Lonely.mp3" type="audio/mpeg">
+    <audio id="Music" loop muted>
+        <source src="Lonely.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
 
     <script>
         $(document).ready(function() {
+            var music = document.getElementById("Music");
+
             $('input[type=checkbox]').change(function(){
                 $('#envelope').css({'animation':'fall 2s linear 1', '-webkit-animation':'fall 2s linear 1'});
                 $('#envelope').fadeOut(1500, function() {
                     $('#card').css({'visibility':'visible'});
 
-                    // Play music when the card is shown
-                    var music = document.getElementById("Music");
-                    music.play();
+                    // Unmute and play music
+                    music.muted = false;
+                    music.play().catch(error => {
+                        console.log("Autoplay prevented: ", error);
+                    });
                 });
             });
         });
